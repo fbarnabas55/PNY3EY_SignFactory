@@ -13,10 +13,11 @@ namespace SignFactory.Entities.Entity_Models
 {
     public class Order : IIdEntity
     {
-        public Order(string id,string customer, string installationLocation, DaylightTime time)
+        public Order(string id,string customer,string type ,string installationLocation, DaylightTime time)
         {
             Id = id;
             Customer = customer;
+            Type = type;
             InstallationAdress = installationLocation;
             Time = time;
         }
@@ -25,13 +26,15 @@ namespace SignFactory.Entities.Entity_Models
         [Key]
         public string Id { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string Customer { get; set; }
+
+        [StringLength(10)]
+        public string Type { get; set; }
 
         [StringLength(100)]
         public string InstallationAdress { get; set; }
 
-        [StringLength(100)]
         public DaylightTime Time { get; set; }
 
         [NotMapped]
