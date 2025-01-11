@@ -35,6 +35,6 @@ namespace SignFactory.Entities.Entity_Models
         public DaylightTime Time { get; set; }
 
         [NotMapped]
-        public virtual ICollection<Price>? Prices { get; set; }
+        public virtual ICollection<Priceing>? Prices { get; set; }
     }
 }
