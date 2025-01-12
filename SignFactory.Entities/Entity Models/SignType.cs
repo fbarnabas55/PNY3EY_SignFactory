@@ -6,7 +6,7 @@ using SignFactory.Entities.Helpers;
 
 namespace SignFactory.Entities.Entity_Models
 {
-    public class SignType
+    public class SignType : IIdEntity
     {
         public SignType(string typeName, int basePrice, string orderId)
         {

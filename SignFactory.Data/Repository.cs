@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignFactory.Entities.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SignFactory.Data
 {
-    public class Repository<T> where T : class,IIdentity
+    public class Repository<T> where T : class, IIdEntity
     {
         SignFactoryDbContext ctx;
         public Repository(SignFactoryDbContext ctx)
@@ -45,8 +46,7 @@ namespace SignFactory.Data
         public void Update(T entity)
         {
             var old = FindById(entity.Id);
-            //ez reflexió - ne törődj vele mi ez :) 
-            //minden tulajdonság programozott átmásolása
+
             foreach (var prop in typeof(T).GetProperties())
             {
                 prop.SetValue(old, prop.GetValue(entity));

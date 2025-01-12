@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignFactory.Entities.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SignFactory.Entities.Entity_Models
 {
-    public class Employee
+    public class Employee : IIdEntity
     {
         public Employee(string name, string email)
         {
