@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using SignFactory.Data;
+
 namespace SignFactory
 {
     public class Program
@@ -6,6 +9,12 @@ namespace SignFactory
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<SignFactoryDbContext>(options =>
+            {
+                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SignFactoryDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True");
+                options.UseLazyLoadingProxies();
+            });
 
             // Add services to the container.
 
@@ -31,6 +40,9 @@ namespace SignFactory
             app.MapControllers();
 
             app.Run();
+
+            
+
         }
     }
 }
