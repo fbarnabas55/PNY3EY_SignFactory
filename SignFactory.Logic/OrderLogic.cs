@@ -27,5 +27,10 @@ namespace SignFactory.Logic
             else { repo.Create(o); }
             
         }
+
+        public void GetAllOrders()
+        {
+            repo.GetAll();
+        }
     }
 }

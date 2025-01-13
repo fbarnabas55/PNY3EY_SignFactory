@@ -25,5 +25,10 @@ namespace SignFactory.Endpoint.Controllers
         {
             logic.CreateOrder(dto);
         }
+        [HttpPost]
+        public void GetAllOrders()
+        {
+            logic.GetAllOrders();
+        }
     }
 }
