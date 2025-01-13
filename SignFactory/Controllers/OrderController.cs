@@ -1,25 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SignFactory.Data;
+using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
 
 namespace SignFactory.Endpoint.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        SignFactoryDbContext cxt;
 
-        public OrderController(SignFactoryDbContext cxt)
+        Repository<Order> repo;
+
+        //SignFactoryDbContext ctx;
+
+        public OrderController(Repository<Order> repo)
         {
-            this.cxt = cxt;
+            this.repo = repo;
         }
 
         [HttpPost]
-        public void addOrder(Order order)
+        public void AddOrder(OrderCreateDto dto)
         {
-            cxt.Orders.Add(order);
-            cxt.SaveChanges();
+            var o = new Order(dto.OrderId, dto.Customer,dto.InstallationAdress);
+            repo.Create(o);
         }
     }
 }

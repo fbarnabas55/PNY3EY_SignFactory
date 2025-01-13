@@ -42,7 +42,6 @@ namespace SignFactory.Entities.Entity_Models
         [Required]
         public string InstallationAdress { get; set; }
 
-        [Required]
         public DateTime Time { get; set; }
 
         [NotMapped]
