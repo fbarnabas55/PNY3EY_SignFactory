@@ -2,28 +2,28 @@
 using SignFactory.Data;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
+using SignFactory.Logic;
 
 namespace SignFactory.Endpoint.Controllers
 {
-    [Route("[controller]")]
+    [Route("Add [controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
 
-        Repository<Order> repo;
+        OrderLogic logic;
 
         //SignFactoryDbContext ctx;
 
-        public OrderController(Repository<Order> repo)
+        public OrderController(OrderLogic logic)
         {
-            this.repo = repo;
+            this.logic = logic;
         }
 
         [HttpPost]
         public void AddOrder(OrderCreateDto dto)
         {
-            var o = new Order(dto.OrderId, dto.Customer,dto.InstallationAdress);
-            repo.Create(o);
+            logic.CreateOrder(dto);
         }
     }
 }

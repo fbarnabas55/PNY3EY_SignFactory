@@ -20,7 +20,12 @@ namespace SignFactory.Logic
         public void CreateOrder(OrderCreateDto dto)
         {
             Order o = new Order(dto.OrderId, dto.Customer, dto.InstallationAdress);
-            repo.Create(o);
+            if (repo.GetAll().FirstOrDefault(x=>x.Id == o.Id) != null)
+            {
+                throw new Exception("Order already exists");
+            }
+            else { repo.Create(o); }
+            
         }
     }
 }

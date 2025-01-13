@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using SignFactory.Data;
+using SignFactory.Logic;
 
 namespace SignFactory
 {
@@ -9,8 +10,10 @@ namespace SignFactory
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            // Add services to the container.
 
             builder.Services.AddTransient(typeof(Repository<>));
+            builder.Services.AddTransient<OrderLogic>();
 
             builder.Services.AddDbContext<SignFactoryDbContext>(options =>
             {
@@ -18,10 +21,8 @@ namespace SignFactory
                 options.UseLazyLoadingProxies();
             });
 
-            // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
