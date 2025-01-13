@@ -22,6 +22,10 @@ namespace SignFactory.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Order>()
+                .Property(o => o.Time)
+                .HasDefaultValueSql("GETDATE()");
+
             base.OnModelCreating(modelBuilder);
         }
     }

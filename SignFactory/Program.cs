@@ -10,6 +10,8 @@ namespace SignFactory
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddTransient(typeof(Repository<>));
+
             builder.Services.AddDbContext<SignFactoryDbContext>(options =>
             {
                 options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SignFactoryDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True");

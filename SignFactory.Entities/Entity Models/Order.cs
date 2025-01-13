@@ -13,12 +13,12 @@ namespace SignFactory.Entities.Entity_Models
 {
     public class Order : IIdEntity
     {
-        public Order(string id,string customer,string installationLocation, DateTime time)
+        public Order(string id,string customer,string installationLocation)
         {
             Id = id;
             Customer = customer;
             InstallationAdress = installationLocation;
-            Time = time;
+            Time = DateTime.Now.Date;
             Types = new List<SignType>();
             Employees = new HashSet<Employee>();
         }
@@ -26,6 +26,7 @@ namespace SignFactory.Entities.Entity_Models
         {
             Types = new List<SignType>();
             Employees = new HashSet<Employee>();
+            Time = DateTime.Now.Date;
 
         }
 
@@ -42,7 +43,8 @@ namespace SignFactory.Entities.Entity_Models
         [Required]
         public string InstallationAdress { get; set; }
 
-        public DateTime Time { get; set; }
+        [Required]
+        public DateTime Time { get; set; } = DateTime.Now;
 
         [NotMapped]
         public virtual ICollection<SignType>? Types { get; set; }

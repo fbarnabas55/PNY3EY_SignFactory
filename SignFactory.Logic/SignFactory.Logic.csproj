@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SignFactory.Data\SignFactory.Data.csproj" />
+    <ProjectReference Include="..\SignFactory.Entities\SignFactory.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
