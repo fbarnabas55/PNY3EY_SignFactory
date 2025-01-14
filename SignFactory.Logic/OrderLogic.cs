@@ -37,5 +37,13 @@ namespace SignFactory.Logic
         {
             repo.DeleteById(id);
         }
+
+        public void UpdateOrder(string id,OrderUpdateDto dto)
+        {
+            var old = repo.FindById(id);
+            old.Customer = dto.Customer;
+            old.InstallationAdress = dto.InstallationAdress;
+            repo.Update(old);
+        }
     }
 }

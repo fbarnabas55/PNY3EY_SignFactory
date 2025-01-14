@@ -38,5 +38,12 @@ namespace SignFactory.Endpoint.Controllers
             logic.DeleteOrder(id);
         }
 
+        [HttpPut("{id}")]
+        public void UpdateOrder(string id, [FromBody] OrderUpdateDto dto)
+        {
+            logic.UpdateOrder(id, dto);
+        }
+
+
     }
 }
