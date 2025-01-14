@@ -1,4 +1,5 @@
-﻿using SignFactory.Entities.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
+using SignFactory.Entities.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace SignFactory.Data
         {
             return ctx.Set<T>().First(t => t.Id == id);
         }
+
 
         public void DeleteById(string id)
         {

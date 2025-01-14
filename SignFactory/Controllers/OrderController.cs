@@ -32,7 +32,7 @@ namespace SignFactory.Endpoint.Controllers
             return logic.GetAllOrders();
         }
 
-        [HttpDelete("by {id}")]
+        [HttpDelete("{id}")]
         public void DeleteOrder(string id)
         {
             logic.DeleteOrder(id);
