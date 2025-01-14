@@ -49,7 +49,7 @@ namespace SignFactory.Entities.Entity_Models
         [NotMapped]
         public virtual ICollection<SignType>? Types { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee>? Employees { get; set; }
 
 
     }

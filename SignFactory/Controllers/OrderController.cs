@@ -6,7 +6,7 @@ using SignFactory.Logic;
 
 namespace SignFactory.Endpoint.Controllers
 {
-    [Route("Add [controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
@@ -25,10 +25,18 @@ namespace SignFactory.Endpoint.Controllers
         {
             logic.CreateOrder(dto);
         }
-        [HttpPost]
-        public void GetAllOrders()
+
+        [HttpGet]
+        public IEnumerable<Order> GetAllOrders()
         {
-            logic.GetAllOrders();
+            return logic.GetAllOrders();
         }
+
+        [HttpDelete("by {id}")]
+        public void DeleteOrder(string id)
+        {
+            logic.DeleteOrder(id);
+        }
+
     }
 }

@@ -20,17 +20,22 @@ namespace SignFactory.Logic
         public void CreateOrder(OrderCreateDto dto)
         {
             Order o = new Order(dto.OrderId, dto.Customer, dto.InstallationAdress);
-            if (repo.GetAll().FirstOrDefault(x=>x.Id == o.Id) != null)
+            if (repo.GetAll().FirstOrDefault(x => x.Id == o.Id) != null)
             {
                 throw new Exception("Order already exists");
             }
             else { repo.Create(o); }
-            
+
         }
 
-        public void GetAllOrders()
+        public IEnumerable<Order> GetAllOrders()
         {
-            repo.GetAll();
+            return repo.GetAll();
+        }
+
+        public void DeleteOrder(string id)
+        {
+            repo.DeleteById(id);
         }
     }
 }
