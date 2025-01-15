@@ -1,6 +1,7 @@
 ﻿using SignFactory.Data;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
+using SignFactory.Logic.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,25 +13,28 @@ namespace SignFactory.Logic.Logic
     public class OrderLogic
     {
         Repository<Order> repo;
-        public OrderLogic(Repository<Order> repo)
+        DtoProvider dtoProvider;
+        public OrderLogic(Repository<Order> repo, DtoProvider dtoProvider)
         {
             this.repo = repo;
+            this.dtoProvider = dtoProvider;
         }
 
         public void CreateOrder(OrderCreateDto dto)
         {
-            Order o = new Order(dto.OrderId, dto.Customer, dto.InstallationAdress);
-            if (repo.GetAll().FirstOrDefault(x => x.Id == o.Id) != null)
+            Order o = dtoProvider.Mapper.Map<Order>(dto);
+
+            if (repo.GetAll().FirstOrDefault(x => x.Id == o.Id) == null)
             {
-                throw new Exception("Order already exists");
+                repo.Create(o);
             }
-            else { repo.Create(o); }
+            else { throw new Exception("Order already exists"); }
 
         }
 
         public IEnumerable<Order> GetAllOrders()
         {
-            return repo.GetAll();
+            return repo.GetAll().Select(x =>dtoProvider.Mapper.Map<Order>(x));
         }
 
         public void DeleteOrder(string id)
@@ -41,9 +45,14 @@ namespace SignFactory.Logic.Logic
         public void UpdateOrder(string id, OrderUpdateDto dto)
         {
             var old = repo.FindById(id);
-            old.Customer = dto.Customer;
-            old.InstallationAdress = dto.InstallationAdress;
+            dtoProvider.Mapper.Map(dto, old);
             repo.Update(old);
+        }
+
+        public Order GetOrderByID(string id)
+        {
+            var model = repo.FindById(id);
+            return dtoProvider.Mapper.Map<Order>(model);
         }
     }
 }

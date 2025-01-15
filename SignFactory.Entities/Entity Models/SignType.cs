@@ -13,15 +13,12 @@ namespace SignFactory.Entities.Entity_Models
             Id = Guid.NewGuid().ToString();
             TypeName = typeName;
             BasePrice = basePrice;
-            OrderId = orderId;
             Orders = new HashSet<Order>();
         }
         public SignType()
         {
         }
 
-        public string OrderId { get; set; }
-        public virtual Order Order { get; set; }
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

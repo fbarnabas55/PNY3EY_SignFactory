@@ -13,7 +13,7 @@ namespace SignFactory.Endpoint.Controllers
 
         OrderLogic logic;
 
-        //SignFactoryDbContext ctx;
+        SignFactoryDbContext ctx;
 
         public OrderController(OrderLogic logic)
         {
@@ -30,6 +30,12 @@ namespace SignFactory.Endpoint.Controllers
         public IEnumerable<Order> GetAllOrders()
         {
             return logic.GetAllOrders();
+        }
+
+        [HttpGet("{id}")]
+        public Order GetOrderByID(string id)
+        {
+            return logic.GetOrderByID(id);
         }
 
         [HttpDelete("{id}")]

@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using SignFactory.Data;
+using SignFactory.Logic.Helper;
 using SignFactory.Logic.Logic;
 
 namespace SignFactory
@@ -13,7 +14,9 @@ namespace SignFactory
             // Add services to the container.
 
             builder.Services.AddTransient(typeof(Repository<>));
+            builder.Services.AddTransient<DtoProvider>();
             builder.Services.AddTransient<OrderLogic>();
+            
 
             builder.Services.AddDbContext<SignFactoryDbContext>(options =>
             {

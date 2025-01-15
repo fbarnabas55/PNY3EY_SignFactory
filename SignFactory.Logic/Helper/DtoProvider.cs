@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,9 @@ namespace SignFactory.Logic.Helper
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Order, SignFactory.Entities.Dtos.Order.OrderCreateDto>();
-                cfg.CreateMap<Order, SignFactory.Entities.Dtos.Order.OrderUpdateDto>();
+
+                cfg.CreateMap<OrderUpdateDto, Order>();
+                cfg.CreateMap<OrderCreateDto, Order>();
             });
 
             Mapper = new Mapper(config);
