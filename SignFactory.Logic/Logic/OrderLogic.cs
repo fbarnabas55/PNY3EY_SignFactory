@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SignFactory.Logic
+namespace SignFactory.Logic.Logic
 {
     public class OrderLogic
     {
@@ -38,7 +38,7 @@ namespace SignFactory.Logic
             repo.DeleteById(id);
         }
 
-        public void UpdateOrder(string id,OrderUpdateDto dto)
+        public void UpdateOrder(string id, OrderUpdateDto dto)
         {
             var old = repo.FindById(id);
             old.Customer = dto.Customer;

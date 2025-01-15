@@ -2,7 +2,7 @@
 using SignFactory.Data;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
-using SignFactory.Logic;
+using SignFactory.Logic.Logic;
 
 namespace SignFactory.Endpoint.Controllers
 {

@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using SignFactory.Data;
-using SignFactory.Logic;
+using SignFactory.Logic.Logic;
 
 namespace SignFactory
 {
