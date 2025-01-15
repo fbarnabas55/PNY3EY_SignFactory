@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignFactory.Entities.Dtos.Employee;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace SignFactory.Entities.Dtos.Order
 {
     public class OrderCreateDto
     {
-        public string OrderId { get; set; } = " ";
+        public string Id { get; set; } = " ";
         public string Customer { get; set; } = " ";
         public string InstallationAdress { get; set; } = " ";
     }

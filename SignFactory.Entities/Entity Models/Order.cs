@@ -30,7 +30,7 @@ namespace SignFactory.Entities.Entity_Models
 
         }
 
-        [StringLength(50)]
+        [StringLength(20)]
         [Key]
         [Required]
         public string Id { get; set; }
