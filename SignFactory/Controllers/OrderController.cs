@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SignFactory.Data;
 using SignFactory.Entities.Dtos.Order;
@@ -22,12 +23,15 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public void AddOrder(OrderCreateDto dto)
         {
             logic.CreateOrder(dto);
         }
 
         [HttpGet]
+        [Authorize]
+
         public IEnumerable<OrderViewDto> GetAllOrders()
         {
             return logic.GetAllOrders();
@@ -40,12 +44,16 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
+
         public void DeleteOrder(string id)
         {
             logic.DeleteOrder(id);
         }
 
         [HttpPut("{id}")]
+        [Authorize]
+
         public void UpdateOrder(string id, [FromBody] OrderUpdateDto dto)
         {
             logic.UpdateOrder(id, dto);

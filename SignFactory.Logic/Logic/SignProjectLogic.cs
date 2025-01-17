@@ -28,9 +28,9 @@ namespace SignFactory.Logic.Logic
 
         }
 
-        public IEnumerable<ProjectViewDto> GetAllProjects()
+        public IEnumerable<ProjectFullViewDto> GetAllProjects()
         {
-            return repo.GetAll().Select(x => dtoProvider.Mapper.Map<ProjectViewDto>(x));
+            return repo.GetAll().Select(x => dtoProvider.Mapper.Map<ProjectFullViewDto>(x));
         }
 
         public void DeleteProject(string id)

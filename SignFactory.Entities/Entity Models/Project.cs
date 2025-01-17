@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using SignFactory.Entities.Helpers;
+using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Newtonsoft.Json.Converters;
 
 namespace SignFactory.Entities.Entity_Models
 {
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum PackageDemand
+    {
+        Foiled,
+        Boxed,
+        Stocked
+    }
+    
+
     public class Project : IIdEntity
     {
-        public Project(string orderId, string projectName, string description, string installationAdress, int basePrice, string packageDemand)
+        public Project(string orderId, string projectName, string description, string installationAdress, int basePrice, PackageDemand packageDemand)
         {
             Id = Guid.NewGuid().ToString();
             OrderId = orderId;
@@ -48,8 +60,9 @@ namespace SignFactory.Entities.Entity_Models
         public int BasePrice { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string PackageDemand { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+
+        public PackageDemand PackageDemand { get; set; }
 
         
     }

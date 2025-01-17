@@ -1,11 +1,11 @@
-﻿//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SignFactory.Entities.Entity_Models;
 
 
 namespace SignFactory.Data
 {
-    public class SignFactoryDbContext : DbContext
+    public class SignFactoryDbContext : IdentityDbContext
     {
         public DbSet<Order> Orders { get; set; }
         public DbSet<Project> Projects { get; set; }

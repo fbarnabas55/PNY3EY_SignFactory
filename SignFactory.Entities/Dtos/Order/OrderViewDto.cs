@@ -20,6 +20,6 @@ namespace SignFactory.Entities.Dtos.Order
 
         public DateTime StartDate { get; set; } = DateTime.Now.Date;
 
-        public IEnumerable<ProjectViewDto>? Projects { get; set; }
+        public IEnumerable<ProjectFullViewDto>? Projects { get; set; }
     }
 }

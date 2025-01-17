@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SignFactory.Data;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Dtos.SignProject;
+using SignFactory.Entities.Entity_Models;
 using SignFactory.Logic.Logic;
 
 namespace SignFactory.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
+
     public class SignProjectController : ControllerBase
     {
 
@@ -21,18 +25,21 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpPost]
-        public void AddOrder(ProjectCreateDto dto)
+        public void AddProject(ProjectCreateDto dto)
         {
             logic.CreateProject(dto);
+            var demands = Enum.GetNames(typeof(PackageDemand));
+            Ok(demands);
         }
 
         [HttpGet]
-        public IEnumerable<ProjectViewDto> GetAllProjects()
+        public IEnumerable<ProjectFullViewDto> GetAllProjects()
         {
             return logic.GetAllProjects();
         }
 
         [HttpDelete("{id}")]
+
         public void DeleteProject(string id)
         {
             logic.DeleteProject(id);
