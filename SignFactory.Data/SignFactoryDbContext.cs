@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SignFactory.Entities.Entity_Models;
-using System.Diagnostics;
-using System.Linq;
+
 
 namespace SignFactory.Data
 {
     public class SignFactoryDbContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
-        public DbSet<SignType> Types { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<SignProject> Projects { get; set; }
+
         public SignFactoryDbContext(DbContextOptions<SignFactoryDbContext> cxt) : base(cxt)
         {
 
@@ -22,9 +22,21 @@ namespace SignFactory.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Order>()
-                .Property(o => o.Time)
-                .HasDefaultValueSql("GETDATE()");
+                .HasMany(p => p.Project)
+                .WithOne(o => o.Order)
+                .HasForeignKey(o => o.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.Deadline)
+                .HasColumnType("DATE");
+
+            modelBuilder.Entity<Order>()
+                .Property(o => o.StartDate)
+                .HasColumnType("DATE");
+
 
             base.OnModelCreating(modelBuilder);
         }

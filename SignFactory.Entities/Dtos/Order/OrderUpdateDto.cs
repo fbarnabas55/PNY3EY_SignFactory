@@ -8,7 +8,10 @@ namespace SignFactory.Entities.Dtos.Order
 {
     public class OrderUpdateDto
     {
-        public string Customer { get; set; } = " ";
-        public string InstallationAdress { get; set; } = " ";
+        public string OrderName { get; set; } = " ";
+
+        public string ProjectManager { get; set; } = " ";
+
+        public DateTime Deadline { get; set; }
     }
 }

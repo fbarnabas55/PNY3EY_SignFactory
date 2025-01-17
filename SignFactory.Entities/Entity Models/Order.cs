@@ -13,43 +13,37 @@ namespace SignFactory.Entities.Entity_Models
 {
     public class Order : IIdEntity
     {
-        public Order(string id,string customer,string installationLocation)
+        public Order(string id, string orderName, string projectManager, DateTime deadline)
         {
             Id = id;
-            Customer = customer;
-            InstallationAdress = installationLocation;
-            Time = DateTime.Now.Date;
-            Types = new List<SignType>();
-            Employees = new HashSet<Employee>();
+            OrderName = orderName;
+            ProjectManager = projectManager;
+            Deadline = deadline.Date;
+            StartDate = DateTime.Now.Date;
         }
-        public Order()
-        {
-            Types = new List<SignType>();
-            Employees = new HashSet<Employee>();
-            Time = DateTime.Now.Date;
+        
 
-        }
-
-        [StringLength(20)]
+        [StringLength(30)]
         [Key]
         [Required]
         public string Id { get; set; }
 
         [StringLength(100)]
         [Required]
-        public string Customer { get; set; }
-
-        [StringLength(200)]
+        public string OrderName { get; set; }
+        
+        [StringLength(100)]
         [Required]
-        public string InstallationAdress { get; set; }
+        public string ProjectManager { get; set; }
 
         [Required]
-        public DateTime Time { get; set; } = DateTime.Now;
+        public DateTime Deadline { get; set; }
+
+        [Required]
+        public DateTime StartDate { get; set; } = DateTime.Now.Date;
 
         [NotMapped]
-        public virtual ICollection<SignType>? Types { get; set; }
-
-        public virtual ICollection<Employee>? Employees { get; set; }
+        public virtual ICollection<SignProject>? Project { get; set; }
 
 
     }

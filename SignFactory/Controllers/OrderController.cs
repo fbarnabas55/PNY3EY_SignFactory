@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SignFactory.Data;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
@@ -27,13 +28,13 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Order> GetAllOrders()
+        public IEnumerable<OrderViewDto> GetAllOrders()
         {
             return logic.GetAllOrders();
         }
 
         [HttpGet("{id}")]
-        public Order GetOrderByID(string id)
+        public OrderViewDto GetOrderByID(string id)
         {
             return logic.GetOrderByID(id);
         }

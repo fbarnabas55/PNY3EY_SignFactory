@@ -19,11 +19,6 @@ namespace SignFactory.Entities.Entity_Models
             Email = email;
             PhoneNumber = phoneNumber;
             Department = department;
-            Orders = new HashSet<Order>();
-        }
-        public Employee()
-        {
-            Orders = new HashSet<Order>();
         }
 
         [StringLength(20)]
@@ -41,7 +36,6 @@ namespace SignFactory.Entities.Entity_Models
         [StringLength(100)]
         [Required]
         public string Department { get; set; }
-        [NotMapped]
-        public virtual ICollection<Order>? Orders { get; set; }
+        
     }
 }

@@ -16,7 +16,7 @@ namespace SignFactory
             builder.Services.AddTransient(typeof(Repository<>));
             builder.Services.AddTransient<DtoProvider>();
             builder.Services.AddTransient<OrderLogic>();
-            builder.Services.AddTransient<EmployeeLogic>();
+            builder.Services.AddTransient<SignProjectLogic>();
 
 
             builder.Services.AddDbContext<SignFactoryDbContext>(options =>
