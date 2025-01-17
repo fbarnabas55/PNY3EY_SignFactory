@@ -43,7 +43,7 @@ namespace SignFactory.Entities.Entity_Models
         public DateTime StartDate { get; set; } = DateTime.Now.Date;
 
         [NotMapped]
-        public virtual ICollection<SignProject>? Project { get; set; }
+        public virtual ICollection<Project>? Projects { get; set; }
 
 
     }

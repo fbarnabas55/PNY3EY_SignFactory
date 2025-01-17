@@ -8,23 +8,18 @@ namespace SignFactory.Data
     public class SignFactoryDbContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
-        public DbSet<SignProject> Projects { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         public SignFactoryDbContext(DbContextOptions<SignFactoryDbContext> cxt) : base(cxt)
         {
 
         }
-        public SignFactoryDbContext()
-        {
-            this.Database.EnsureDeleted();
-            this.Database.EnsureCreated();
-        }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<Order>()
-                .HasMany(p => p.Project)
+                .HasMany(p => p.Projects)
                 .WithOne(o => o.Order)
                 .HasForeignKey(o => o.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);

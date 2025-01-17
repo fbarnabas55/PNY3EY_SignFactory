@@ -6,9 +6,9 @@ using SignFactory.Entities.Helpers;
 
 namespace SignFactory.Entities.Entity_Models
 {
-    public class SignProject : IIdEntity
+    public class Project : IIdEntity
     {
-        public SignProject(string orderId, string projectName, string description, string installationAdress, int basePrice, string packageDemand)
+        public Project(string orderId, string projectName, string description, string installationAdress, int basePrice, string packageDemand)
         {
             Id = Guid.NewGuid().ToString();
             OrderId = orderId;

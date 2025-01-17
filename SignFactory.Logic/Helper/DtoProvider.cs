@@ -21,8 +21,8 @@ namespace SignFactory.Logic.Helper
                 cfg.CreateMap<Order, OrderViewDto>();
                 cfg.CreateMap<OrderUpdateDto, Order>();
                 cfg.CreateMap<OrderCreateDto, Order>();
-                cfg.CreateMap<ProjectCreateDto, SignProject>();
-                cfg.CreateMap<SignProject, ProjectViewDto>();
+                cfg.CreateMap<ProjectCreateDto, Project>();
+                cfg.CreateMap<Project, ProjectViewDto>();
             });
 
             Mapper = new Mapper(config);

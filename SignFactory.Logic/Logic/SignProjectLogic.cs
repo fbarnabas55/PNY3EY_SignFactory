@@ -13,9 +13,9 @@ namespace SignFactory.Logic.Logic
 {
     public class SignProjectLogic
     {
-        Repository<SignProject> repo;
+        Repository<Project> repo;
         DtoProvider dtoProvider;
-        public SignProjectLogic(Repository<SignProject> repo, DtoProvider dtoProvider)
+        public SignProjectLogic(Repository<Project> repo, DtoProvider dtoProvider)
         {
             this.repo = repo;
             this.dtoProvider = dtoProvider;
@@ -23,7 +23,7 @@ namespace SignFactory.Logic.Logic
 
         public void CreateProject(ProjectCreateDto dto)
         {
-            var model = dtoProvider.Mapper.Map<SignProject>(dto);
+            var model = dtoProvider.Mapper.Map<Project>(dto);
             repo.Create(model);
 
         }
