@@ -25,7 +25,7 @@ namespace SignFactory
             builder.Services.AddTransient<OrderLogic>();
             builder.Services.AddTransient<SignProjectLogic>();
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(
+            builder.Services.AddIdentity<AppUser, IdentityRole>(
                     option =>
                     {
                         option.Password.RequireDigit = false;
@@ -34,7 +34,8 @@ namespace SignFactory
                         option.Password.RequireUppercase = false;
                         option.Password.RequireLowercase = false;
                     }
-)
+            )
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SignFactoryDbContext>()
                 .AddDefaultTokenProviders();
 

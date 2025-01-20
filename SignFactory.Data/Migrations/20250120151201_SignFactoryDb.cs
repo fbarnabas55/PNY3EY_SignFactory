@@ -30,6 +30,9 @@ namespace SignFactory.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -56,7 +59,9 @@ namespace SignFactory.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     OrderName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ProjectManager = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    InstallationAdress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Deadline = table.Column<DateTime>(type: "DATE", nullable: false),
                     StartDate = table.Column<DateTime>(type: "DATE", nullable: false)
                 },
@@ -179,9 +184,10 @@ namespace SignFactory.Data.Migrations
                     OrderId = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ProjectName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    InstallationAdress = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    BasePrice = table.Column<int>(type: "int", nullable: false),
-                    PackageDemand = table.Column<int>(type: "int", nullable: false)
+                    ProjectManager = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    PackageDemand = table.Column<int>(type: "int", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

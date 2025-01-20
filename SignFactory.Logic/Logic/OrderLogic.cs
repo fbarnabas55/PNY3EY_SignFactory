@@ -32,9 +32,9 @@ namespace SignFactory.Logic.Logic
 
         }
 
-        public IEnumerable<OrderViewDto> GetAllOrders()
+        public IEnumerable<OrderFullViewDto> GetAllOrders()
         {
-            return repo.GetAll().Select(x =>dtoProvider.Mapper.Map<OrderViewDto>(x));
+            return repo.GetAll().Select(x =>dtoProvider.Mapper.Map<OrderFullViewDto>(x));
         }
 
         public void DeleteOrder(string id)
@@ -49,10 +49,10 @@ namespace SignFactory.Logic.Logic
             repo.Update(old);
         }
 
-        public OrderViewDto GetOrderByID(string id)
+        public OrderShortViewDto GetOrderByID(string id)
         {
             var model = repo.FindById(id);
-            return dtoProvider.Mapper.Map<OrderViewDto>(model);
+            return dtoProvider.Mapper.Map<OrderShortViewDto>(model);
         }
     }
 }

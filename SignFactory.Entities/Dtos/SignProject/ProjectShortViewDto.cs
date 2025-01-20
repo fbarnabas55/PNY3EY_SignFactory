@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 
 namespace SignFactory.Entities.Dtos.SignProject
 {
-    public class ProjectShortView
+    public class ProjectShortViewDto
     {
         public string ProjectName { get; set; } = " ";
 
         public string Description { get; set; } = " ";
 
-        public string InstallationAdress { get; set; } = " ";
+        public int Price { get; set; }
 
-        public int BasePrice { get; set; }
-
-        [JsonConverter(typeof(StringEnumConverter))]
         public PackageDemand PackageDemand { get; set; }
+
+        public double NetPrice => Price * 1.27;
+
     }
 }

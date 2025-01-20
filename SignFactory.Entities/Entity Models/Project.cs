@@ -5,11 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using SignFactory.Entities.Helpers;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
-using Newtonsoft.Json.Converters;
 
 namespace SignFactory.Entities.Entity_Models
 {
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum PackageDemand
     {
         Foiled,
@@ -20,17 +19,18 @@ namespace SignFactory.Entities.Entity_Models
 
     public class Project : IIdEntity
     {
-        public Project(string orderId, string projectName, string description, string installationAdress, int basePrice, PackageDemand packageDemand)
+        public Project(string orderId, string projectName, string description, string installationAdress, int price, PackageDemand packageDemand)
         {
             Id = Guid.NewGuid().ToString();
             OrderId = orderId;
             ProjectName = projectName;
             Description = description;
-            InstallationAdress = installationAdress;
-            BasePrice = basePrice;
+            Price = price;
             PackageDemand = packageDemand;
 
         }
+
+        public Project() { }
 
         [StringLength(50)]
         [Key]
@@ -45,25 +45,28 @@ namespace SignFactory.Entities.Entity_Models
         [NotMapped]
         public virtual Order? Order { get; set; }
 
-        [Required]
         [StringLength(100)]
+        [Required]
         public string ProjectName { get; set; }
 
         [StringLength(500)]
         public string Description { get; set; }
 
-        [Required]
         [StringLength(100)]
-        public string InstallationAdress { get; set; }
+        [Required]
+        public string ProjectManager { get; set; }
 
         [Required]
-        public int BasePrice { get; set; }
+        public int Price { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
 
         [Required]
-        [JsonConverter(typeof(StringEnumConverter))]
-
         public PackageDemand PackageDemand { get; set; }
 
-        
+        [Required]
+        public DateTime StartDate { get; set; } = DateTime.Now.Date;
+
+
     }
 }

@@ -31,20 +31,21 @@ namespace SignFactory.Endpoint.Controllers
 
         [HttpGet]
         [Authorize]
+        [Authorize(Roles= "Admin")]
 
-        public IEnumerable<OrderViewDto> GetAllOrders()
+        public IEnumerable<OrderFullViewDto> GetAllOrders()
         {
             return logic.GetAllOrders();
         }
 
         [HttpGet("{id}")]
-        public OrderViewDto GetOrderByID(string id)
+        public OrderShortViewDto GetOrderByID(string id)
         {
             return logic.GetOrderByID(id);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
 
         public void DeleteOrder(string id)
         {

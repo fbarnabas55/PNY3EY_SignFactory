@@ -13,15 +13,17 @@ namespace SignFactory.Entities.Entity_Models
 {
     public class Order : IIdEntity
     {
-        public Order(string id, string orderName, string projectManager, DateTime deadline)
+
+        public Order(string id, string orderName, string installationAdress, string phoneNumber, string email, DateTime deadline, DateTime startDate)
         {
             Id = id;
             OrderName = orderName;
-            ProjectManager = projectManager;
-            Deadline = deadline.Date;
-            StartDate = DateTime.Now.Date;
+            InstallationAdress = installationAdress;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            Deadline = deadline;
+            StartDate = startDate;
         }
-        
 
         [StringLength(30)]
         [Key]
@@ -31,10 +33,15 @@ namespace SignFactory.Entities.Entity_Models
         [StringLength(100)]
         [Required]
         public string OrderName { get; set; }
-        
+
         [StringLength(100)]
-        [Required]
-        public string ProjectManager { get; set; }
+        public string InstallationAdress { get; set; }
+
+        [StringLength(20)]
+        public string PhoneNumber { get; set; }
+
+        [StringLength(100)]
+        public string Email { get; set; }
 
         [Required]
         public DateTime Deadline { get; set; }

@@ -21,9 +21,10 @@ namespace SignFactory.Logic.Logic
             this.dtoProvider = dtoProvider;
         }
 
-        public void CreateProject(ProjectCreateDto dto)
+        public void CreateProject(ProjectCreateDto dto,PackageDemand packageDemand)
         {
             var model = dtoProvider.Mapper.Map<Project>(dto);
+            model.PackageDemand = packageDemand;
             repo.Create(model);
 
         }
@@ -36,6 +37,12 @@ namespace SignFactory.Logic.Logic
         public void DeleteProject(string id)
         {
             repo.DeleteById(id);
+        }
+
+        public ProjectShortViewDto GetProjectByID(string id)
+        {
+            var model = repo.FindById(id);
+            return dtoProvider.Mapper.Map<ProjectShortViewDto>(model);
         }
     }
 }

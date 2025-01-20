@@ -25,9 +25,9 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpPost]
-        public void AddProject(ProjectCreateDto dto)
+        public void AddProject(ProjectCreateDto dto, PackageDemand packageDemand)
         {
-            logic.CreateProject(dto);
+            logic.CreateProject(dto,packageDemand);
             var demands = Enum.GetNames(typeof(PackageDemand));
             Ok(demands);
         }
@@ -38,7 +38,14 @@ namespace SignFactory.Endpoint.Controllers
             return logic.GetAllProjects();
         }
 
+        [HttpGet("{id}")]
+        public ProjectShortViewDto GetProjectByID(string id)
+        {
+            return logic.GetProjectByID(id);
+        }
+
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
 
         public void DeleteProject(string id)
         {

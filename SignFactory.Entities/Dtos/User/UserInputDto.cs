@@ -11,7 +11,14 @@ namespace SignFactory.Entities.Dtos.User
     {
         [MinLength(6)]
         public required string UserName { get; set; } = "";
+
         [MinLength(6)]
         public required string Password { get; set; } = "";
+
+        [MinLength(6)]
+        public required string FirstName { get; set; } = "";
+
+        [MinLength(6)]
+        public required string LastName { get; set; } = "";
     }
 }
