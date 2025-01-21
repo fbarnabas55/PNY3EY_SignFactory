@@ -7,18 +7,12 @@ using System.Threading.Tasks;
 
 namespace SignFactory.Entities.Dtos.User
 {
-    public class UserInputDto
+    public class UserLoginDto
     {
         [MinLength(6)]
         public required string UserName { get; set; } = "";
 
         [MinLength(6)]
         public required string Password { get; set; } = "";
-
-        [MinLength(2)]
-        public required string FirstName { get; set; } = "";
-
-        [MinLength(2)]
-        public required string LastName { get; set; } = "";
     }
 }

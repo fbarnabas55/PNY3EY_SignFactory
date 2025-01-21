@@ -1,4 +1,5 @@
-﻿using SignFactory.Entities.Dtos.SignProject;
+﻿using SignFactory.Entities.Dtos.Design;
+using SignFactory.Entities.Dtos.SignProject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,8 @@ namespace SignFactory.Entities.Dtos.Order
         public DateTime StartDate { get; set; } = DateTime.Now.Date;
 
         public IEnumerable<ProjectFullViewDto>? Projects { get; set; }
+
+        public IEnumerable<DesignFullViewDto>? Designs { get; set; }
+
     }
 }

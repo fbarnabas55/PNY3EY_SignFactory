@@ -30,7 +30,6 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [Authorize(Roles= "Admin")]
 
         public IEnumerable<OrderFullViewDto> GetAllOrders()
@@ -39,6 +38,7 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public OrderShortViewDto GetOrderByID(string id)
         {
             return logic.GetOrderByID(id);

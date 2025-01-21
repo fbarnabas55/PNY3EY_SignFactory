@@ -25,6 +25,8 @@ namespace SignFactory.Entities.Entity_Models
             StartDate = startDate;
         }
 
+        public Order() { }
+
         [StringLength(30)]
         [Key]
         [Required]

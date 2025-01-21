@@ -29,22 +29,27 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpPost("register")]
-        public async Task Register(UserInputDto dto)
+        public async Task<OkObjectResult> Register(UserInputDto dto)
         {
+            var existingUser = await userManager.FindByNameAsync(dto.UserName);
+            if (existingUser != null)
+            {
+                throw new ArgumentException ("This username is already taken.");
+            }
             var user = new AppUser(dto.UserName);
             user.FirstName = dto.FirstName;
             user.LastName = dto.LastName;
             await userManager.CreateAsync(user, dto.Password);
             if (userManager.Users.Count() == 1)
             {
-                //adminná előléptetés
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
                 await userManager.AddToRoleAsync(user, "Admin");
             }
+            return Ok(new { Message = $"Welcome '{user.UserName}'." });
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login(UserInputDto dto)
+        public async Task<ActionResult> Login(UserLoginDto dto)
         {
             var user = await userManager.FindByNameAsync(dto.UserName);
             if (user == null)
@@ -81,7 +86,7 @@ namespace SignFactory.Endpoint.Controllers
 
         
         [HttpGet("GetAllUsers")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = userManager.Users.ToList();
@@ -92,7 +97,6 @@ namespace SignFactory.Endpoint.Controllers
                 var roles = await userManager.GetRolesAsync(user);
                 userDtos.Add(new UserViewDto
                 {
-                    Id = user.Id,
                     UserName = user.UserName,
                     IsAdmin = roles.Contains("Admin"),
                     Roles = roles.ToList(),
@@ -106,7 +110,7 @@ namespace SignFactory.Endpoint.Controllers
 
 
         [HttpGet("GiveRole/{username}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> GiveRole(string username, UserRole userRole)
         {
@@ -136,7 +140,7 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpGet("RevokeRole/{username}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> RevokeRole(string username, UserRole userRole)
         {
@@ -155,6 +159,23 @@ namespace SignFactory.Endpoint.Controllers
             }
 
             return Ok(new { Message = $"Role '{roleName}' has been removed from user '{user.UserName}'." });
+        }
+
+        [HttpDelete("DeleteUser/{username}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUser(string username)
+        {
+            var user = await userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return NotFound(new { Message = "User not found" });
+            }
+            var result = await userManager.DeleteAsync(user);
+            if (!result.Succeeded)
+            {
+                return StatusCode(500, new { Message = "Failed to delete user", Errors = result.Errors });
+            }
+            return Ok(new { Message = $"User '{user.UserName}' has been deleted." });
         }
 
         private JwtSecurityToken GenerateAccessToken(IEnumerable<Claim>? claims,int expiryInMinutes)

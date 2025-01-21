@@ -11,9 +11,9 @@ namespace SignFactory.Entities.Dtos.SignProject
 
         public required string Description { get; set; } = "";
 
-        public required string InstallationAdress { get; set; } = "";
+        public required string ProjectManager { get; set; } = "";
 
-        public required int BasePrice { get; set; }
+        public required int Price { get; set; }
 
     }
 }

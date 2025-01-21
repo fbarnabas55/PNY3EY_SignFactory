@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
+
 namespace SignFactory.Entities.Dtos.Order
 {
     public class OrderCreateDto
@@ -8,7 +10,11 @@ namespace SignFactory.Entities.Dtos.Order
 
         public string OrderName { get; set; } = " ";
 
-        public string ProjectManager { get; set; } = " ";
+        public string InstallationAdress { get; set; } = " ";
+
+        public string PhoneNumber { get; set; } = " ";
+
+        public string Email { get; set; } = " ";
 
         public DateTime Deadline { get; set; }
     }

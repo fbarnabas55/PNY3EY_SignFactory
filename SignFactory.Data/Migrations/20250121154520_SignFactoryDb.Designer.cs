@@ -12,7 +12,7 @@ using SignFactory.Data;
 namespace SignFactory.Data.Migrations
 {
     [DbContext(typeof(SignFactoryDbContext))]
-    [Migration("20250121123111_SignFactoryDb")]
+    [Migration("20250121154520_SignFactoryDb")]
     partial class SignFactoryDb
     {
         /// <inheritdoc />
