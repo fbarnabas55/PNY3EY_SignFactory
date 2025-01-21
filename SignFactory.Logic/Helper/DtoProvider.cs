@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SignFactory.Data;
+using SignFactory.Entities.Dtos.Design;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Dtos.SignProject;
 using SignFactory.Entities.Dtos.User;
@@ -30,7 +31,11 @@ namespace SignFactory.Logic.Helper
                 cfg.CreateMap<ProjectCreateDto, Project>();
                 cfg.CreateMap<Project, ProjectFullViewDto>();
                 cfg.CreateMap<Project, ProjectShortViewDto>();
+                cfg.CreateMap<DesignCreateDto, Design>();
+                cfg.CreateMap<Design, DesignFullViewDto>();
+                cfg.CreateMap<Design, DesignShortViewDto>();
                 cfg.CreateMap<AppUser, UserViewDto>()
+
                 .AfterMap((src, dest) =>
                 {
                     dest.IsAdmin = userManager.IsInRoleAsync(src, "Admin").Result;

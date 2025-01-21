@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SignFactory.Data;
+using SignFactory.Entities.Dtos.SignProject;
 using SignFactory.Entities.Dtos.User;
+using SignFactory.Entities.Entity_Models;
 using SignFactory.Logic.Helper;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -77,33 +79,82 @@ namespace SignFactory.Endpoint.Controllers
             }
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public IEnumerable<UserViewDto> GetUsers()
+        
+        [HttpGet("GetAllUsers")]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllUsers()
         {
-            return userManager.Users.Select(t =>
-                dtoProvider.Mapper.Map<UserViewDto>(t)
-            );
+            var users = userManager.Users.ToList();
+            var userDtos = new List<UserViewDto>();
+
+            foreach (var user in users)
+            {
+                var roles = await userManager.GetRolesAsync(user);
+                userDtos.Add(new UserViewDto
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    IsAdmin = roles.Contains("Admin"),
+                    Roles = roles.ToList(),
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
+                });
+            }
+
+            return Ok(userDtos);
         }
 
-        [HttpGet("GiveAdmin/{userid}")]
-        [Authorize(Roles = "Admin")]
-        public async Task UpdateToAdmin(string userid)
+
+        [HttpGet("GiveRole/{username}")]
+        //[Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> GiveRole(string username, UserRole userRole)
         {
-            var user = await userManager.FindByIdAsync(userid);
+            var user = await userManager.FindByNameAsync(username);
             if (user == null)
-                throw new ArgumentException("User not found");
-            await userManager.AddToRoleAsync(user, "Admin");
+            {
+                return NotFound(new { Message = "User not found" });
+            }
+
+            string roleName = userRole.ToString();
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                var roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+                if (!roleResult.Succeeded)
+                {
+                    return StatusCode(500, new { Message = "Failed to create role", Errors = roleResult.Errors });
+                }
+            }
+
+            var result = await userManager.AddToRoleAsync(user, roleName);
+            if (!result.Succeeded)
+            {
+                return StatusCode(500, new { Message = "Failed to assign role", Errors = result.Errors });
+            }
+
+            return Ok(new { Message = $"Role '{roleName}' has been assigned to user '{user.UserName}'." });
         }
 
-        [HttpGet("RevokeAdmin/{userid}")]
-        [Authorize(Roles = "Admin")]
-        public async Task RevokeAdmin(string userid)
+        [HttpGet("RevokeRole/{username}")]
+        //[Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> RevokeRole(string username, UserRole userRole)
         {
-            var user = await userManager.FindByIdAsync(userid);
+            var user = await userManager.FindByNameAsync(username);
             if (user == null)
-                throw new ArgumentException("User not found");
-            await userManager.RemoveFromRoleAsync(user, "Admin");
+            {
+                return NotFound(new { Message = "User not found" });
+            }
+
+            string roleName = userRole.ToString();
+
+            var result = await userManager.RemoveFromRoleAsync(user, roleName);
+            if (!result.Succeeded)
+            {
+                return StatusCode(500, new { Message = "Failed to remove role", Errors = result.Errors });
+            }
+
+            return Ok(new { Message = $"Role '{roleName}' has been removed from user '{user.UserName}'." });
         }
 
         private JwtSecurityToken GenerateAccessToken(IEnumerable<Claim>? claims,int expiryInMinutes)

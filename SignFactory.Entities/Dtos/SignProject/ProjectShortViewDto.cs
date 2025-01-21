@@ -13,13 +13,9 @@ namespace SignFactory.Entities.Dtos.SignProject
     public class ProjectShortViewDto
     {
         public string ProjectName { get; set; } = " ";
-
         public string Description { get; set; } = " ";
-
         public int Price { get; set; }
-
         public PackageDemand PackageDemand { get; set; }
-
         public double NetPrice => Price * 1.27;
 
     }

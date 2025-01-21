@@ -53,7 +53,7 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles ="Admin,ProjectManager")]
 
         public void UpdateOrder(string id, [FromBody] OrderUpdateDto dto)
         {

@@ -10,16 +10,16 @@ namespace SignFactory.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin,ProjectManager")]
 
-    public class SignProjectController : ControllerBase
+    public class ProjectController : ControllerBase
     {
 
-        SignProjectLogic logic;
+        ProjectLogic logic;
 
         SignFactoryDbContext ctx;
 
-        public SignProjectController(SignProjectLogic logic)
+        public ProjectController(ProjectLogic logic)
         {
             this.logic = logic;
         }
@@ -29,7 +29,6 @@ namespace SignFactory.Endpoint.Controllers
         {
             logic.CreateProject(dto,packageDemand);
             var demands = Enum.GetNames(typeof(PackageDemand));
-            Ok(demands);
         }
 
         [HttpGet]
@@ -45,8 +44,6 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
-
         public void DeleteProject(string id)
         {
             logic.DeleteProject(id);

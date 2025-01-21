@@ -9,7 +9,9 @@ namespace SignFactory.Data
     {
         public DbSet<Order> Orders { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Design> Designs { get; set; }
         public DbSet<AppUser> AppUsers { get; set; }
+
 
         public SignFactoryDbContext(DbContextOptions<SignFactoryDbContext> cxt) : base(cxt)
         {
@@ -21,6 +23,12 @@ namespace SignFactory.Data
 
             modelBuilder.Entity<Order>()
                 .HasMany(p => p.Projects)
+                .WithOne(o => o.Order)
+                .HasForeignKey(o => o.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(p => p.Designs)
                 .WithOne(o => o.Order)
                 .HasForeignKey(o => o.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);

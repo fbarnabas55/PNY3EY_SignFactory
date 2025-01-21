@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace SignFactory.Entities.Entity_Models
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum PackageDemand
     {
         Foiled,
@@ -60,7 +59,6 @@ namespace SignFactory.Entities.Entity_Models
         public int Price { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-
         [Required]
         public PackageDemand PackageDemand { get; set; }
 

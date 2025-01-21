@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using MovieClub.Endpoint.Helpers;
 using SignFactory.Data;
 using SignFactory.Logic.Helper;
 using SignFactory.Logic.Logic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SignFactory
 {
@@ -23,7 +25,8 @@ namespace SignFactory
             builder.Services.AddTransient(typeof(Repository<>));
             builder.Services.AddTransient<DtoProvider>();
             builder.Services.AddTransient<OrderLogic>();
-            builder.Services.AddTransient<SignProjectLogic>();
+            builder.Services.AddTransient<ProjectLogic>();
+            builder.Services.AddTransient<SignDesignLogic>();
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(
                     option =>
@@ -74,6 +77,13 @@ namespace SignFactory
                 opt.Filters.Add<ExceptionFilter>();
                 opt.Filters.Add<ValidationFilterAttribute>();
             });
+
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
+            
 
 
 
@@ -126,7 +136,7 @@ namespace SignFactory
 
             app.Run();
 
-            
+
 
         }
     }

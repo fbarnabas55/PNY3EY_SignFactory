@@ -232,6 +232,55 @@ namespace SignFactory.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SignFactory.Entities.Entity_Models.Design", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Brightness")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Decor")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Fixing")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Lightings")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Material")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Designs");
+                });
+
             modelBuilder.Entity("SignFactory.Entities.Entity_Models.Order", b =>
                 {
                     b.Property<string>("Id")
@@ -322,6 +371,9 @@ namespace SignFactory.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.HasDiscriminator().HasValue("AppUser");
                 });
 
@@ -376,6 +428,17 @@ namespace SignFactory.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SignFactory.Entities.Entity_Models.Design", b =>
+                {
+                    b.HasOne("SignFactory.Entities.Entity_Models.Order", "Order")
+                        .WithMany("Designs")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("SignFactory.Entities.Entity_Models.Project", b =>
                 {
                     b.HasOne("SignFactory.Entities.Entity_Models.Order", "Order")
@@ -389,6 +452,8 @@ namespace SignFactory.Data.Migrations
 
             modelBuilder.Entity("SignFactory.Entities.Entity_Models.Order", b =>
                 {
+                    b.Navigation("Designs");
+
                     b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618

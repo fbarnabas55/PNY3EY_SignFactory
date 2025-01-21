@@ -51,6 +51,7 @@ namespace SignFactory.Entities.Entity_Models
 
         [NotMapped]
         public virtual ICollection<Project>? Projects { get; set; }
+        public virtual ICollection<Design>? Designs { get; set; }
 
 
     }

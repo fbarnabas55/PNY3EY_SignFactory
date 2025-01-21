@@ -1,21 +1,15 @@
 ﻿using SignFactory.Data;
-using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Dtos.SignProject;
 using SignFactory.Entities.Entity_Models;
 using SignFactory.Logic.Helper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SignFactory.Logic.Logic
 {
-    public class SignProjectLogic
+    public class ProjectLogic
     {
         Repository<Project> repo;
         DtoProvider dtoProvider;
-        public SignProjectLogic(Repository<Project> repo, DtoProvider dtoProvider)
+        public ProjectLogic(Repository<Project> repo, DtoProvider dtoProvider)
         {
             this.repo = repo;
             this.dtoProvider = dtoProvider;
