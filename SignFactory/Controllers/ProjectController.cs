@@ -10,7 +10,7 @@ namespace SignFactory.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,ProjectManager")]
+    //[Authorize(Roles = "Admin,ProjectManager")]
 
     public class ProjectController : ControllerBase
     {
@@ -44,6 +44,7 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpDelete("{id}")]
+        //[Authorize(Roles = "Admin")]
         public void DeleteProject(string id)
         {
             logic.DeleteProject(id);

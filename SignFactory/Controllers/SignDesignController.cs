@@ -11,7 +11,7 @@ namespace SignFactory.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize(Roles="Admin,Designer")]
+    //[Authorize(Roles="Admin,Designer")]
     public class SignDesignController
     {
         SignDesignLogic logic;
@@ -46,7 +46,7 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public void DeleteDesign(string id)
         {

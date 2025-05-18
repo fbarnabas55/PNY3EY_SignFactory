@@ -1,16 +1,10 @@
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using MovieClub.Endpoint.Helpers;
 using SignFactory.Data;
 using SignFactory.Logic.Helper;
 using SignFactory.Logic.Logic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace SignFactory
@@ -28,38 +22,38 @@ namespace SignFactory
             builder.Services.AddTransient<ProjectLogic>();
             builder.Services.AddTransient<SignDesignLogic>();
 
-            builder.Services.AddIdentity<AppUser, IdentityRole>(
-                    option =>
-                    {
-                        option.Password.RequireDigit = false;
-                        option.Password.RequiredLength = 6;
-                        option.Password.RequireNonAlphanumeric = false;
-                        option.Password.RequireUppercase = false;
-                        option.Password.RequireLowercase = false;
-                    }
-            )
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<SignFactoryDbContext>()
-                .AddDefaultTokenProviders();
+            //builder.Services.AddIdentity<AppUser, IdentityRole>(
+            //        option =>
+            //        {
+            //            option.Password.RequireDigit = false;
+            //            option.Password.RequiredLength = 6;
+            //            option.Password.RequireNonAlphanumeric = false;
+            //            option.Password.RequireUppercase = false;
+            //            option.Password.RequireLowercase = false;
+            //        }
+            //)
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<SignFactoryDbContext>()
+            //    .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthentication(option =>
-            {
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = true;
-                options.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = "SignFactory.com",
-                    ValidIssuer = "SignFactory.com",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("NagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcs"))
-                };
-            }); ;
+            //builder.Services.AddAuthentication(option =>
+            //{
+            //    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.SaveToken = true;
+            //    options.RequireHttpsMetadata = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters()
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidAudience = "SignFactory.com",
+            //        ValidIssuer = "SignFactory.com",
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("NagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcsNagyonhosszútitkosítókulcs"))
+            //    };
+            //}); ;
 
             builder.Services.AddDbContext<SignFactoryDbContext>(options =>
             {
@@ -91,29 +85,29 @@ namespace SignFactory
             builder.Services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "SignFactory", Version = "v1" });
-                option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    In = ParameterLocation.Header,
-                    Description = "Please enter a valid token",
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.Http,
-                    BearerFormat = "JWT",
-                    Scheme = "Bearer"
-                });
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
-                }
-            },
-            new string[]{}
-        }
-    });
+    //            option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    //            {
+    //                In = ParameterLocation.Header,
+    //                Description = "Please enter a valid token",
+    //                Name = "Authorization",
+    //                Type = SecuritySchemeType.Http,
+    //                BearerFormat = "JWT",
+    //                Scheme = "Bearer"
+    //            });
+    //            option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference = new OpenApiReference
+    //            {
+    //                Type=ReferenceType.SecurityScheme,
+    //                Id="Bearer"
+    //            }
+    //        },
+    //        new string[]{}
+    //    }
+    //});
             });
             var app = builder.Build();
 
@@ -128,8 +122,8 @@ namespace SignFactory
 
             app.UseHttpsRedirection();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
 
             app.MapControllers();

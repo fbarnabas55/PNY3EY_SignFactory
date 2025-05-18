@@ -23,14 +23,14 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public void AddOrder(OrderCreateDto dto)
         {
             logic.CreateOrder(dto);
         }
 
         [HttpGet]
-        [Authorize(Roles= "Admin")]
+        //[Authorize(Roles= "Admin")]
 
         public IEnumerable<OrderFullViewDto> GetAllOrders()
         {
@@ -38,14 +38,14 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
+        //[Authorize]
         public OrderShortViewDto GetOrderByID(string id)
         {
             return logic.GetOrderByID(id);
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
 
         public void DeleteOrder(string id)
         {
@@ -53,7 +53,7 @@ namespace SignFactory.Endpoint.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles ="Admin,ProjectManager")]
+        //[Authorize(Roles ="Admin,ProjectManager")]
 
         public void UpdateOrder(string id, [FromBody] OrderUpdateDto dto)
         {
