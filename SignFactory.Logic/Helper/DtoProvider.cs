@@ -26,6 +26,7 @@ namespace SignFactory.Logic.Helper
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Order, OrderFullViewDto>();
+                cfg.CreateMap<Order, OrderShortViewDto>();
                 cfg.CreateMap<OrderUpdateDto, Order>();
                 cfg.CreateMap<OrderCreateDto, Order>();
                 cfg.CreateMap<ProjectCreateDto, Project>();

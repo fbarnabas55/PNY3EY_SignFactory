@@ -22,6 +22,16 @@ namespace SignFactory
             builder.Services.AddTransient<ProjectLogic>();
             builder.Services.AddTransient<SignDesignLogic>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             //builder.Services.AddIdentity<AppUser, IdentityRole>(
             //        option =>
             //        {
@@ -110,6 +120,9 @@ namespace SignFactory
     //});
             });
             var app = builder.Build();
+
+
+            app.UseCors();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

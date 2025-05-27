@@ -23,7 +23,7 @@ namespace SignFactory.Data
         }
         public T FindById(string id)
         {
-            return ctx.Set<T>().First(t => t.Id == id);
+            return ctx.Set<T>().FirstOrDefault(t => t.Id == id);
         }
 
 
@@ -49,10 +49,8 @@ namespace SignFactory.Data
         {
             var old = FindById(entity.Id);
 
-            foreach (var prop in typeof(T).GetProperties())
-            {
-                prop.SetValue(old, prop.GetValue(entity));
-            }
+
+
             ctx.Set<T>().Update(old);
             ctx.SaveChanges();
         }
