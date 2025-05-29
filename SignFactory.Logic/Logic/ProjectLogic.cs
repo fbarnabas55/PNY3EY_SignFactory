@@ -38,5 +38,12 @@ namespace SignFactory.Logic.Logic
             var model = repo.FindById(id);
             return dtoProvider.Mapper.Map<ProjectShortViewDto>(model);
         }
+
+        public List<ProjectShortViewDto> GetProjectsByOrder(string orderId)
+        {
+            var projects = repo.GetProjectsByOrderId(orderId);
+            return projects.Select(p => dtoProvider.Mapper.Map<ProjectShortViewDto>(p)).ToList();
+        }
+
     }
 }

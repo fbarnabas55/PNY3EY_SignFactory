@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SignFactory.Entities.Entity_Models;
 using SignFactory.Entities.Helpers;
 using System;
 using System.Collections.Generic;
@@ -54,5 +55,13 @@ namespace SignFactory.Data
             ctx.Set<T>().Update(old);
             ctx.SaveChanges();
         }
+
+        public List<Project> GetProjectsByOrderId(string orderId)
+        {
+            return ctx.Projects
+                          .Where(p => p.OrderId == orderId)
+                          .ToList();
+        }
+
     }
 }

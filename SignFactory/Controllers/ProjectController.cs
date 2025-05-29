@@ -43,6 +43,12 @@ namespace SignFactory.Endpoint.Controllers
             return logic.GetProjectByID(id);
         }
 
+        [HttpGet("order/{orderId}")]
+        public List<ProjectShortViewDto> GetProjectsByOrder(string orderId)
+        {
+            return logic.GetProjectsByOrder(orderId);
+        }
+
         [HttpDelete("{id}")]
         //[Authorize(Roles = "Admin")]
         public void DeleteProject(string id)
