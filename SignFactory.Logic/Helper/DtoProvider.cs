@@ -30,6 +30,7 @@ namespace SignFactory.Logic.Helper
                 cfg.CreateMap<OrderUpdateDto, Order>();
                 cfg.CreateMap<OrderCreateDto, Order>();
                 cfg.CreateMap<ProjectCreateDto, Project>();
+                cfg.CreateMap<ProjectUpdateDto, Project>();
                 cfg.CreateMap<Project, ProjectFullViewDto>();
                 cfg.CreateMap<Project, ProjectShortViewDto>();
                 cfg.CreateMap<DesignCreateDto, Design>();

@@ -51,7 +51,6 @@ namespace SignFactory.Data
             var old = FindById(entity.Id);
 
 
-
             ctx.Set<T>().Update(old);
             ctx.SaveChanges();
         }

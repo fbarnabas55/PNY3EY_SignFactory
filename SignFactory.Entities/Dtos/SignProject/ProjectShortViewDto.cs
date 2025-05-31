@@ -12,6 +12,7 @@ namespace SignFactory.Entities.Dtos.SignProject
 {
     public class ProjectShortViewDto
     {
+        public string Id { get; set; } = " ";
         public string ProjectName { get; set; } = " ";
         public string Description { get; set; } = " ";
         public int Price { get; set; }

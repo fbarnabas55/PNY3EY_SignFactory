@@ -45,5 +45,15 @@ namespace SignFactory.Logic.Logic
             return projects.Select(p => dtoProvider.Mapper.Map<ProjectShortViewDto>(p)).ToList();
         }
 
+        public void UpdateProject(string id, ProjectUpdateDto dto)
+        {
+            var old = repo.FindById(id);
+            dtoProvider.Mapper.Map(dto, old);
+            repo.Update(old);
+        }
+
+
+
+
     }
 }

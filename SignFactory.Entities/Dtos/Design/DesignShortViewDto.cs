@@ -9,6 +9,7 @@ namespace SignFactory.Entities.Dtos.Design
 {
     public class DesignShortViewDto
     {
+        public string Id { get; set; }
         public string Decor { get; set; }
         public string Description { get; set; }
         public string Fixing { get; set; }
