@@ -16,6 +16,7 @@ namespace SignFactory.Entities.Dtos.SignProject
         public string ProjectName { get; set; } = " ";
         public string Description { get; set; } = " ";
         public int Price { get; set; }
+        public string ProjectManager { get; set; } = " ";
         public PackageDemand PackageDemand { get; set; }
         public double NetPrice => Price * 1.27;
 

@@ -62,5 +62,12 @@ namespace SignFactory.Data
                           .ToList();
         }
 
+        public List<Design> GetDesignsByOrderId(string orderId)
+        {
+            return ctx.Designs
+                .Where(d => d.OrderId == orderId)
+                .ToList();
+        }
+
     }
 }

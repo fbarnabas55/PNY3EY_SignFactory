@@ -45,6 +45,19 @@ namespace SignFactory.Endpoint.Controllers
             return logic.GetDesignByID(id);
         }
 
+        [HttpGet("order/{orderId}")]
+        public List<DesignFullViewDto> GetDesignsByOrder(string orderId)
+        {
+            return logic.GetDesignsByOrder(orderId);
+        }
+
+        [HttpPut("{id}")]
+        public void UpdateDesign(string id, [FromBody] DesignFullViewDto dto)
+        {
+            logic.UpdateDesign(id, dto);
+        }
+
+
         [HttpDelete("{id}")]
         //[Authorize(Roles = "Admin")]
 

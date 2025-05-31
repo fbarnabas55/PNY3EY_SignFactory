@@ -1,4 +1,5 @@
-﻿using SignFactory.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SignFactory.Data;
 using SignFactory.Entities.Dtos.Design;
 using SignFactory.Entities.Dtos.SignProject;
 using SignFactory.Entities.Entity_Models;
@@ -41,5 +42,20 @@ namespace SignFactory.Logic.Logic
             var model = repo.FindById(id);
             return dtoProvider.Mapper.Map<DesignShortViewDto>(model);
         }
+
+        public List<DesignFullViewDto> GetDesignsByOrder(string orderId)
+        {
+            var designs = repo.GetDesignsByOrderId(orderId);
+            return designs.Select(d => dtoProvider.Mapper.Map<DesignFullViewDto>(d)).ToList();
+        }
+
+        public void UpdateDesign(string id, DesignFullViewDto dto)
+        {
+            var old = repo.FindById(id);
+            dtoProvider.Mapper.Map(dto, old);
+            repo.Update(old);
+        }
+
+
     }
 }
