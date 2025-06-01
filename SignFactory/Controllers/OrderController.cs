@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SignFactory.Data;
+using SignFactory.Entities.Dtos;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
 using SignFactory.Logic.Logic;
@@ -58,6 +59,33 @@ namespace SignFactory.Endpoint.Controllers
         public void UpdateOrder(string id, [FromBody] OrderUpdateDto dto)
         {
             logic.UpdateOrder(id, dto);
+        }
+
+
+        [HttpGet("stats/max-order-current-month")]
+        public async Task<ActionResult<MaxOrderCurrentMonthDto>> GetMaxOrderCurrentMonth()
+        {
+            var result = await logic.GetMaxOrderCurrentMonthAsync();
+            if (result == null)
+                return NotFound();  // Ha nincs rendelés ebben a hónapban
+            return Ok(result);
+        }
+
+        [HttpGet("stats/orders-per-month")]
+        public async Task<ActionResult<List<MonthlyOrderCountDto>>> GetOrdersPerMonth()
+        {
+            var results = await logic.GetMonthlyOrderCountsAsync();
+            // Üres lista esetén is 200 OK-t adunk vissza (nincs rendelés az adatbázisban vagy még egy hónapban sem)
+            return Ok(results);
+        }
+
+        [HttpGet("stats/top-project-order")]
+        public async Task<ActionResult<TopProjectOrderDto>> GetTopProjectOrder()
+        {
+            var result = await logic.GetTopProjectOrderAsync();
+            if (result == null)
+                return NotFound();  // Ha nincs projekt/rendelés ebben a hónapban
+            return Ok(result);
         }
 
 

@@ -1,4 +1,6 @@
-﻿using SignFactory.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SignFactory.Data;
+using SignFactory.Entities.Dtos;
 using SignFactory.Entities.Dtos.Order;
 using SignFactory.Entities.Entity_Models;
 using SignFactory.Logic.Helper;
@@ -14,10 +16,12 @@ namespace SignFactory.Logic.Logic
     {
         Repository<Order> repo;
         DtoProvider dtoProvider;
-        public OrderLogic(Repository<Order> repo, DtoProvider dtoProvider)
+        private readonly SignFactoryDbContext _context;
+        public OrderLogic(Repository<Order> repo, DtoProvider dtoProvider, SignFactoryDbContext context)
         {
             this.repo = repo;
             this.dtoProvider = dtoProvider;
+            _context = context;
         }
 
         public void CreateOrder(OrderCreateDto dto)
@@ -54,5 +58,91 @@ namespace SignFactory.Logic.Logic
             var model = repo.FindById(id);
             return dtoProvider.Mapper.Map<OrderShortViewDto>(model);
         }
+
+        public async Task<MaxOrderCurrentMonthDto> GetMaxOrderCurrentMonthAsync()
+        {
+            // Aktuális dátum, év/hónap meghatározása
+            DateTime now = DateTime.Now;
+            int currentYear = now.Year;
+            int currentMonth = now.Month;
+            DateTime startOfMonth = new DateTime(currentYear, currentMonth, 1);
+            DateTime nextMonth = startOfMonth.AddMonths(1);
+
+            // Lekérdezés: aktuális hónap rendelései közül a legnagyobb összegű
+            var maxOrder = _context.Orders
+                .Select(o => new
+                {
+                    o.Id,
+                    o.OrderName,
+                    TotalPrice = o.Projects.Sum(p => p.Price),
+                    o.StartDate
+                })
+                .Where(o => o.StartDate.Month == DateTime.Now.Month && o.StartDate.Year == DateTime.Now.Year)
+                .OrderByDescending(o => o.TotalPrice)
+                .FirstOrDefault();
+
+            if (maxOrder == null)
+                return null;  
+
+            // DTO összeállítása az eredményből
+            return new MaxOrderCurrentMonthDto
+            {
+                OrderName = maxOrder.OrderName,
+                TotalValue = maxOrder.TotalPrice
+            };
+        }
+
+        public async Task<List<MonthlyOrderCountDto>> GetMonthlyOrderCountsAsync()
+        {
+            // Csoportosítás év-hónap szerint és darabszám számítás
+            var monthlyCounts = await _context.Orders
+                .GroupBy(o => new { Year = o.StartDate.Year, Month = o.StartDate.Month })
+                .Select(g => new MonthlyOrderCountDto
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    OrderCount = g.Count()
+                })
+                .OrderBy(dto => dto.Year)
+                .ThenBy(dto => dto.Month)
+                .ToListAsync();
+
+            return monthlyCounts;
+        }
+
+        public async Task<TopProjectOrderDto> GetTopProjectOrderAsync()
+        {
+            // Aktuális év/hónap tartomány
+            DateTime now = DateTime.Now;
+            int currentYear = now.Year;
+            int currentMonth = now.Month;
+            DateTime startOfMonth = new DateTime(currentYear, currentMonth, 1);
+            DateTime nextMonth = startOfMonth.AddMonths(1);
+
+            // Lekérdezés: csoportosítás az aktuális havi rendelésekre a projektek (Designok) száma szerint
+            var topGroup = await _context.Designs
+                .Where(d => d.Order != null && d.Order.StartDate >= startOfMonth && d.Order.StartDate < nextMonth)
+                .GroupBy(d => new { d.OrderId, d.Order.OrderName })      // csoportosítás rendelés szerint
+                .Select(g => new
+                {
+                    OrderName = g.Key.OrderName,
+                    ProjectCount = g.Count()
+                })
+                .OrderByDescending(x => x.ProjectCount)
+                .FirstOrDefaultAsync();
+
+            if (topGroup == null)
+                return null;  // Nincs projekt vagy rendelés ebben a hónapban
+
+            // DTO összeállítása a legtöbb projekttel bíró rendelésről
+            return new TopProjectOrderDto
+            {
+                OrderName = topGroup.OrderName,
+                ProjectCount = topGroup.ProjectCount
+            };
+        }
+
+
+
     }
 }

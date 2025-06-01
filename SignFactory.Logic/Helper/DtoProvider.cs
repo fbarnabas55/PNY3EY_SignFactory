@@ -34,6 +34,7 @@ namespace SignFactory.Logic.Helper
                 cfg.CreateMap<Project, ProjectFullViewDto>();
                 cfg.CreateMap<Project, ProjectShortViewDto>();
                 cfg.CreateMap<DesignCreateDto, Design>();
+                cfg.CreateMap<DesignFullViewDto, Design>();
                 cfg.CreateMap<Design, DesignFullViewDto>();
                 cfg.CreateMap<Design, DesignShortViewDto>();
                 //cfg.CreateMap<AppUser, UserViewDto>()
