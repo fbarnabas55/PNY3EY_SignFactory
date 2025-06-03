@@ -19,7 +19,7 @@ namespace SignFactory.Entities.Dtos
         public int OrderCount { get; set; }
     }
 
-    public class TopProjectOrderDto
+    public class ProjectCountPerOrderDto
     {
         public string OrderName { get; set; }
         public int ProjectCount { get; set; }

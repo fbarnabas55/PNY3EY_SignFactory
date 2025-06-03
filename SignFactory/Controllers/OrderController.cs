@@ -79,12 +79,10 @@ namespace SignFactory.Endpoint.Controllers
             return Ok(results);
         }
 
-        [HttpGet("stats/top-project-order")]
-        public async Task<ActionResult<TopProjectOrderDto>> GetTopProjectOrder()
+        [HttpGet("stats/project-counts-per-order")]
+        public async Task<ActionResult<List<ProjectCountPerOrderDto>>> GetProjectCountsPerOrderThisMonth()
         {
-            var result = await logic.GetTopProjectOrderAsync();
-            if (result == null)
-                return NotFound();  // Ha nincs projekt/rendelés ebben a hónapban
+            var result = await logic.GetProjectCountsPerOrderThisMonthAsync();
             return Ok(result);
         }
 

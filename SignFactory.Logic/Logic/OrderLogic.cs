@@ -110,36 +110,24 @@ namespace SignFactory.Logic.Logic
             return monthlyCounts;
         }
 
-        public async Task<TopProjectOrderDto> GetTopProjectOrderAsync()
+        public async Task<List<ProjectCountPerOrderDto>> GetProjectCountsPerOrderThisMonthAsync()
         {
-            // Aktuális év/hónap tartomány
             DateTime now = DateTime.Now;
-            int currentYear = now.Year;
-            int currentMonth = now.Month;
-            DateTime startOfMonth = new DateTime(currentYear, currentMonth, 1);
+            DateTime startOfMonth = new DateTime(now.Year, now.Month, 1);
             DateTime nextMonth = startOfMonth.AddMonths(1);
 
-            // Lekérdezés: csoportosítás az aktuális havi rendelésekre a projektek (Designok) száma szerint
-            var topGroup = await _context.Designs
+            var results = await _context.Designs
                 .Where(d => d.Order != null && d.Order.StartDate >= startOfMonth && d.Order.StartDate < nextMonth)
-                .GroupBy(d => new { d.OrderId, d.Order.OrderName })      // csoportosítás rendelés szerint
-                .Select(g => new
+                .GroupBy(d => new { d.OrderId, d.Order.OrderName })
+                .Select(g => new ProjectCountPerOrderDto
                 {
                     OrderName = g.Key.OrderName,
                     ProjectCount = g.Count()
                 })
                 .OrderByDescending(x => x.ProjectCount)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
-            if (topGroup == null)
-                return null;  // Nincs projekt vagy rendelés ebben a hónapban
-
-            // DTO összeállítása a legtöbb projekttel bíró rendelésről
-            return new TopProjectOrderDto
-            {
-                OrderName = topGroup.OrderName,
-                ProjectCount = topGroup.ProjectCount
-            };
+            return results;
         }
 
 

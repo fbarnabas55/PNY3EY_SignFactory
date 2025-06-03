@@ -12,6 +12,8 @@ namespace SignFactory.Entities.Dtos.Order
     {
         public string Id { get; set; } = " ";
 
+        
+
         public string OrderName { get; set; } = " ";
 
         public string InstallationAdress { get; set; } = " ";
@@ -19,6 +21,8 @@ namespace SignFactory.Entities.Dtos.Order
         public string PhoneNumber { get; set; } = " ";
 
         public string Email { get; set; } = " ";
+
+        public DateTime? StartDate { get; set; }
 
         public DateTime Deadline { get; set; }
     }
